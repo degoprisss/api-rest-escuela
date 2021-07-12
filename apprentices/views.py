@@ -1,3 +1,5 @@
+from datetime import datetime, timedelta
+
 from django.core.mail import send_mail
 from django.shortcuts import render
 
@@ -8,6 +10,7 @@ from rest_framework import status
 
 from apprentices.models import Apprentices
 from apprentices.serializers import SerializerStudents
+from apprentices.tasks import student_email
 
 
 class StudentsViewSet(ModelViewSet):
@@ -28,11 +31,7 @@ class StudentsViewSet(ModelViewSet):
         serialized = serializers(data=request.data)
         serialized.is_valid(raise_exception=True)
         serialized.save()
-        send_mail(
-            'Se agregó un libro a nuestro sistema',
-            'Gracias por agregar un nuevo libro',
-            'probando@gmail.com',
-            ['degoprisss@gmail.com'],
-            fail_silently=False
-        )
+        student_email.apply_async(args=['degoprisss@gmail.com'])
+
+
         return Response(status=status.HTTP_200_OK, data=serialized.data)

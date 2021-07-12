@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'apprentices.apps.ApprenticesConfig',
     'teachers.apps.TeachersConfig',
-    'classes.apps.ClassesConfig'
+    'classes.apps.ClassesConfig',
+    'drf_yasg'
 ]
 
 MIDDLEWARE = [
@@ -140,3 +141,5 @@ EMAIL_HOST = 'smtp.mailtrap.io'
 EMAIL_HOST_USER = 'dee07ce10f1f7e'
 EMAIL_HOST_PASSWORD = 'ea2bc080c3689f'
 EMAIL_PORT = '2525'
+
+CELERY_BROKER_URL = 'amqp://guest:guest@localhost:5672//'
